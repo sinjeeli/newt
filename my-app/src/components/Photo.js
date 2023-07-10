@@ -1,14 +1,15 @@
-import React from 'react';
-
-const Photo = () => {
-    return (
+// import React,  from 'react';
 
 
-
-
-        
-    )
+// const Photo = () => {
+//     return (
 
 
 
-}
+
+
+//     )
+
+
+
+// }
