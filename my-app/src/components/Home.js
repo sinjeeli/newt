@@ -28,7 +28,6 @@ const Home = ({ handleSearch }) => {
     e.preventDefault();
     fetchPhotos('');
   };
-
   return (
     <div>
       <h2>Home Photos</h2>

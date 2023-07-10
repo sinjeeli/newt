@@ -28,7 +28,6 @@ const Cats = ({ handleSearch }) => {
     e.preventDefault();
     fetchPhotos('');
   };
-
   return (
     <div>
       <h2>Cats Photos</h2>

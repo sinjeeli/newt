@@ -28,7 +28,6 @@ const Computers = ({ handleSearch }) => {
     e.preventDefault();
     fetchPhotos('');
   };
-
   return (
     <div>
       <h2>Computers Photos</h2>

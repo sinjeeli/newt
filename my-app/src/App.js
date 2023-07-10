@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchFormHTML from './components/SearchForm';
 import apiKey from './components/config';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, useHistory  } from 'react-router-dom';
 import Cats from './components/Cats';
 import Dogs from './components/Dogs';
 import Home from './components/Home';
@@ -58,7 +58,32 @@ const App = () => {
 
     return null;
   };
+//
+useEffect(() => {
+  const handleBeforeUnload = (event) => {
+    // Cancel the event to prevent the page from refreshing
+    event.preventDefault();
+    // Redirect the page to the home route
+    window.location.href = '/';
+  };
 
+  // Attach the beforeunload event listener
+  window.addEventListener('beforeunload', handleBeforeUnload);
+
+  // Clean up the event listener when the component is unmounted
+  return () => {
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+  };
+}, []);
+
+
+
+
+
+
+
+
+//
   return (
     <Router>
       <ScrollToTop />
@@ -79,3 +104,5 @@ const App = () => {
 };
 
 export default App;
+
+//project complete

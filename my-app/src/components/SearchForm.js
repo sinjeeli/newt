@@ -35,8 +35,6 @@ const SearchFormHTML = () => {
           </svg>
         </button>
       </form>
-
-      {/* Rest of the component */}
     </div>
   );
 };

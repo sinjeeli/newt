@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import apiKey from './config';
 
 const SearchResults = () => {
   const [searchResults, setSearchResults] = useState([]);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Extract the search query from the URL
     const searchQuery = new URLSearchParams(location.search).get('q');
     if (searchQuery) {
       fetchSearchResults(searchQuery);
@@ -16,7 +16,6 @@ const SearchResults = () => {
 
   const fetchSearchResults = async (searchQuery) => {
     try {
-      // Perform the search and update the search results state
       const response = await fetch(
         `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${searchQuery}&per_page=24&format=json&nojsoncallback=1`
       );
@@ -32,9 +31,14 @@ const SearchResults = () => {
     }
   };
 
+  const handleRedirectHome = () => {
+    navigate('/');
+  };
+
   return (
     <div>
       <h2>Search Results</h2>
+      <button onClick={handleRedirectHome}>Back to Home</button>
       <ul>
         {searchResults.map((photo) => (
           <li key={photo.id}>
