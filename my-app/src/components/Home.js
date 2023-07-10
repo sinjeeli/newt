@@ -1,36 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import apiKey from './config';
 
-const Home = ({ handleSearch }) => {
+const Home = () => {
   const [photos, setPhotos] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch the initial set of photos for the cats page
     fetchPhotos('trees');
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchPhotos = async (searchQuery) => {
     try {
-      if (searchQuery === '') {
-        setPhotos([]); // Clear the photos array
+      const response = await fetch(
+        `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${searchQuery}&per_page=24&format=json&nojsoncallback=1`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setPhotos(data.photos.photo);
       } else {
-        const data = await handleSearch(searchQuery);
-        setPhotos(data);
+        throw new Error('Request failed with status ' + response.status);
       }
     } catch (error) {
       console.error('Error fetching photos:', error);
+      setPhotos([]);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetchPhotos('');
+  const handleRedirectHome = () => {
+    navigate('/');
   };
+
   return (
     <div>
       <h2>Home Photos</h2>
+      <button onClick={handleRedirectHome}>Back to Home</button>
       <ul>
         {photos.map((photo) => (
           <li key={photo.id}>
@@ -43,10 +47,6 @@ const Home = ({ handleSearch }) => {
       </ul>
     </div>
   );
-};
-
-Home.propTypes = {
-  handleSearch: PropTypes.func.isRequired,
 };
 
 export default Home;

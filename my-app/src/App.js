@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchFormHTML from './components/SearchForm';
 import apiKey from './components/config';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation, useHistory  } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Cats from './components/Cats';
 import Dogs from './components/Dogs';
 import Home from './components/Home';
@@ -9,8 +9,12 @@ import Computers from './components/Computers';
 import NotFound from './components/NotFound';
 import './index.css';
 import SearchResults from './components/SearchResults';
-//
+import Photo from './components/Photo';
+import Nav from './components/Nav';
+
 const App = () => {
+  const [searchResults, setSearchResults] = useState([]);
+
   const handleSearch = async (searchQuery) => {
     try {
       const response = await fetch(
@@ -18,84 +22,43 @@ const App = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        return data.photos.photo; // Return the fetched photos data directly
+        setSearchResults(data.photos.photo);
       } else {
         throw new Error('Request failed with status ' + response.status);
       }
     } catch (error) {
       console.error('Error fetching photos:', error);
-      return []; // Return an empty array in case of an error
+      setSearchResults([]);
     }
   };
 
-  const Navigation = () => {
-    return (
-      <nav className="main-nav">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/cats">Cats</Link>
-          </li>
-          <li>
-            <Link to="/dogs">Dogs</Link>
-          </li>
-          <li>
-            <Link to="/computers">Computers</Link>
-          </li>
-        </ul>
-      </nav>
-    );
-  };
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      window.location.href = '/';
+    };
 
-  const ScrollToTop = () => {
-    const location = useLocation();
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
-    React.useEffect(() => {
-      window.scrollTo(0, 0);
-    }, [location]);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
-    return null;
-  };
-//
-useEffect(() => {
-  const handleBeforeUnload = (event) => {
-    // Cancel the event to prevent the page from refreshing
-    event.preventDefault();
-    // Redirect the page to the home route
-    window.location.href = '/';
-  };
-
-  // Attach the beforeunload event listener
-  window.addEventListener('beforeunload', handleBeforeUnload);
-
-  // Clean up the event listener when the component is unmounted
-  return () => {
-    window.removeEventListener('beforeunload', handleBeforeUnload);
-  };
-}, []);
-
-
-
-
-
-
-
-
-//
   return (
     <Router>
-      <ScrollToTop />
       <div className="container">
         <SearchFormHTML handleSearch={handleSearch} />
-        <Navigation />
+        <Nav />
         <Routes>
           <Route path="/" element={<Home handleSearch={handleSearch} />} />
           <Route path="/cats" element={<Cats handleSearch={handleSearch} />} />
           <Route path="/dogs" element={<Dogs handleSearch={handleSearch} />} />
           <Route path="/computers" element={<Computers handleSearch={handleSearch} />} />
-          <Route path="/search" element={<SearchResults />} />
+          <Route
+            path="/search"
+            element={<SearchResults searchResults={searchResults} />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
@@ -104,5 +67,3 @@ useEffect(() => {
 };
 
 export default App;
-
-//project complete
