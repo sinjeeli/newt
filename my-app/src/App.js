@@ -10,7 +10,6 @@ import NotFound from './components/NotFound';
 import './index.css';
 import SearchResults from './components/SearchResults';
 //
-
 const App = () => {
   const handleSearch = async (searchQuery) => {
     try {
@@ -51,11 +50,11 @@ const App = () => {
   };
 
   const ScrollToTop = () => {
-    const { pathname } = useLocation();
+    const location = useLocation();
 
     React.useEffect(() => {
       window.scrollTo(0, 0);
-    }, [pathname]);
+    }, [location]);
 
     return null;
   };
@@ -67,17 +66,10 @@ const App = () => {
         <SearchFormHTML handleSearch={handleSearch} />
         <Navigation />
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={<Home handleSearch={handleSearch} />}
-          />
+          <Route path="/" element={<Home handleSearch={handleSearch} />} />
           <Route path="/cats" element={<Cats handleSearch={handleSearch} />} />
           <Route path="/dogs" element={<Dogs handleSearch={handleSearch} />} />
-          <Route
-            path="/computers"
-            element={<Computers handleSearch={handleSearch} />}
-          />
+          <Route path="/computers" element={<Computers handleSearch={handleSearch} />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
