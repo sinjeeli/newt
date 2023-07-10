@@ -32,9 +32,6 @@ const Computers = ({ handleSearch }) => {
   return (
     <div>
       <h2>Computers Photos</h2>
-      <form onSubmit={handleSubmit}>
-        <button type="submit">Clear Search</button>
-      </form>
       <ul>
         {photos.map((photo) => (
           <li key={photo.id}>

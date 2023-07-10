@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SearchFormHTML from './components/SearchForm';
 import apiKey from './components/config';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import Cats from './components/Cats';
 import Dogs from './components/Dogs';
 import Home from './components/Home';
@@ -10,7 +10,6 @@ import NotFound from './components/NotFound';
 import './index.css';
 import SearchResults from './components/SearchResults';
 //
-
 
 const App = () => {
   const handleSearch = async (searchQuery) => {
@@ -29,23 +28,62 @@ const App = () => {
       return []; // Return an empty array in case of an error
     }
   };
-  
+
+  const Navigation = () => {
+    return (
+      <nav className="main-nav">
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/cats">Cats</Link>
+          </li>
+          <li>
+            <Link to="/dogs">Dogs</Link>
+          </li>
+          <li>
+            <Link to="/computers">Computers</Link>
+          </li>
+        </ul>
+      </nav>
+    );
+  };
+
+  const ScrollToTop = () => {
+    const { pathname } = useLocation();
+
+    React.useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+  };
+
   return (
     <Router>
+      <ScrollToTop />
       <div className="container">
         <SearchFormHTML handleSearch={handleSearch} />
+        <Navigation />
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/cats" element={<Cats />} />
-          <Route path="/dogs" element={<Dogs />} />
-          <Route path="/computers" element={<Computers />} />
-          <Route path="/search" element={<SearchResults />} /> {/* New route for search results */}
+          <Route
+            exact
+            path="/"
+            element={<Home handleSearch={handleSearch} />}
+          />
+          <Route path="/cats" element={<Cats handleSearch={handleSearch} />} />
+          <Route path="/dogs" element={<Dogs handleSearch={handleSearch} />} />
+          <Route
+            path="/computers"
+            element={<Computers handleSearch={handleSearch} />}
+          />
+          <Route path="/search" element={<SearchResults />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
   );
 };
-
 
 export default App;

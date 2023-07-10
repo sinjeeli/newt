@@ -6,7 +6,7 @@ const Home = ({ handleSearch }) => {
 
   useEffect(() => {
     // Fetch the initial set of photos for the cats page
-    fetchPhotos('home');
+    fetchPhotos('trees');
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -32,9 +32,6 @@ const Home = ({ handleSearch }) => {
   return (
     <div>
       <h2>Home Photos</h2>
-      <form onSubmit={handleSubmit}>
-        <button type="submit">Clear Search</button>
-      </form>
       <ul>
         {photos.map((photo) => (
           <li key={photo.id}>
