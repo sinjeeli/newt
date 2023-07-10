@@ -46,7 +46,7 @@ const SearchResults = () => {
           <li key={photo.id}>
             <img
               src={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`}
-              alt={photo.title}
+              alt={photo.title}          
             />
           </li>
         ))}
