@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const SearchFormHTML = ({ handleSearch }) => {
+const SearchFormHTML = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleSearch(searchQuery);
+    navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
     setSearchQuery('');
   };
 
@@ -34,29 +36,7 @@ const SearchFormHTML = ({ handleSearch }) => {
         </button>
       </form>
 
-      <nav className="main-nav">
-        <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/cats">Cats</a>
-          </li>
-          <li>
-            <a href="/dogs">Dogs</a>
-          </li>
-          <li>
-            <a href="/computers">Computers</a>
-          </li>
-        </ul>
-      </nav>
-
-      <div className="photo-container">
-        <h2>Results</h2>
-        <ul>
-          {/* Render the photos here */}
-        </ul>
-      </div>
+      {/* Rest of the component */}
     </div>
   );
 };

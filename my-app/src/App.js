@@ -1,5 +1,4 @@
-import React from 'react';
-import './index.css';
+import React, { useState } from 'react';
 import SearchFormHTML from './components/SearchForm';
 import apiKey from './components/config';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -8,6 +7,10 @@ import Dogs from './components/Dogs';
 import Home from './components/Home';
 import Computers from './components/Computers';
 import NotFound from './components/NotFound';
+import './index.css';
+import SearchResults from './components/SearchResults';
+//
+
 
 const App = () => {
   const handleSearch = async (searchQuery) => {
@@ -32,28 +35,17 @@ const App = () => {
       <div className="container">
         <SearchFormHTML handleSearch={handleSearch} />
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={<Home handleSearch={handleSearch} />}
-          />
-          <Route
-            path="/cats"
-            element={<Cats handleSearch={handleSearch} />}
-          />
-          <Route
-            path="/dogs"
-            element={<Dogs handleSearch={handleSearch} />}
-          />
-          <Route
-            path="/computers"
-            element={<Computers handleSearch={handleSearch} />}
-          />
+          <Route exact path="/" element={<Home />} />
+          <Route path="/cats" element={<Cats />} />
+          <Route path="/dogs" element={<Dogs />} />
+          <Route path="/computers" element={<Computers />} />
+          <Route path="/search" element={<SearchResults />} /> {/* New route for search results */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
   );
 };
+
 
 export default App;

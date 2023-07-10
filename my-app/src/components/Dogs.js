@@ -5,22 +5,36 @@ const Dogs = ({ handleSearch }) => {
   const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
-    // Fetch the initial set of photos for the home page
-    const fetchPhotos = async () => {
-      try {
-        const data = await handleSearch('dogs'); // Use the handleSearch function passed from props
-        setPhotos(data);
-      } catch (error) {
-        console.error('Error fetching photos:', error);
-      }
-    };
+    // Fetch the initial set of photos for the cats page
+    fetchPhotos('dogs');
 
-    fetchPhotos();
-  }, [handleSearch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchPhotos = async (searchQuery) => {
+    try {
+      if (searchQuery === '') {
+        setPhotos([]); // Clear the photos array
+      } else {
+        const data = await handleSearch(searchQuery);
+        setPhotos(data);
+      }
+    } catch (error) {
+      console.error('Error fetching photos:', error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchPhotos('');
+  };
 
   return (
     <div>
       <h2>Dogs Photos</h2>
+      <form onSubmit={handleSubmit}>
+        <button type="submit">Clear Search</button>
+      </form>
       <ul>
         {photos.map((photo) => (
           <li key={photo.id}>
