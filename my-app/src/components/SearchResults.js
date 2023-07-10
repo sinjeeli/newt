@@ -47,10 +47,6 @@ const SearchResults = () => {
             <img
               src={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`}
               alt={photo.title}
-              className={photo.size === 'small' ? 'small-image' : ''}
-
-            //to delete
-                    
             />
           </li>
         ))}
