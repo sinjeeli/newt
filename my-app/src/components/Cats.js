@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-const Cats = ({ photos }) => {
+const Cats = ({ handleSearch }) => {
+  const [photos, setPhotos] = useState([]);
+
+  useEffect(() => {
+    // Fetch the initial set of photos for the home page
+    const fetchPhotos = async () => {
+      try {
+        const data = await handleSearch('cats'); // Use the handleSearch function passed from props
+        setPhotos(data);
+      } catch (error) {
+        console.error('Error fetching photos:', error);
+      }
+    };
+
+    fetchPhotos();
+  }, [handleSearch]);
+
   return (
     <div>
-      <h2>Cat Photos</h2>
+      <h2>Cats Photos</h2>
       <ul>
         {photos.map((photo) => (
           <li key={photo.id}>
@@ -16,6 +33,10 @@ const Cats = ({ photos }) => {
       </ul>
     </div>
   );
+};
+
+Cats.propTypes = {
+  handleSearch: PropTypes.func.isRequired,
 };
 
 export default Cats;
