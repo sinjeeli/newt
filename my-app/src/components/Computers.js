@@ -34,7 +34,6 @@ const Computers = () => {
   return (
     <div>
       <h2>Computers Photos</h2>
-      <button onClick={handleRedirectHome}>Back to Home</button>
       <ul>
         {photos.map((photo) => (
           <li key={photo.id}>

@@ -34,7 +34,6 @@ const Cats = () => {
   return (
     <div>
       <h2>Cats Photos</h2>
-      <button onClick={handleRedirectHome}>Back to Home</button>
       <ul>
         {photos.map((photo) => (
           <li key={photo.id}>
