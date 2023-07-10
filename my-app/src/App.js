@@ -2,6 +2,12 @@ import React, {useEffect, useState} from 'react';
 import './index.css';
 import SearchFormHTML from './components/SearchForm';
 import apiKey from './components/config';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Cats from './components/Cats';
+import Dogs from './components/Dogs';
+import Home from './components/Home';
+import Computers from './components/Computers';
+import NotFound from './components/NotFound';
 
 const App = () => {
   const [photos, setPhotos] = useState([]);
@@ -27,22 +33,18 @@ const App = () => {
   
   //
   return (
+    <Router>
     <div className='container'>
       <SearchFormHTML />
-      <div className="photo-container">
-      <h2>Cat Photos</h2>
-      <ul>
-        {photos.map((photo) => (
-          <li key={photo.id}>
-            <img
-              src={`https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`}
-              alt={photo.title}
-            />
-          </li>
-        ))}
-      </ul>
+      <Routes>
+        <Route exact path='/' element={Home} />
+        <Route path='/cats' element={Cats} />
+        <Route path='/dogs' element={Dogs} />
+        <Route path='/computers' element={Computers} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
-  </div>
+  </Router>
  );
 
         }
