@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import apiKey from './config';
 
 const Dogs = () => {
   const [photos, setPhotos] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPhotos('dogs');
