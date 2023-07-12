@@ -27,10 +27,6 @@ const Home = () => {
     }
   };
 
-  const handleRedirectHome = () => {
-    navigate('/');
-  };
-
   return (
     <div>
       <h2>Home Photos</h2>

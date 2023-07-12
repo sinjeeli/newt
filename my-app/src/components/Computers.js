@@ -27,9 +27,6 @@ const Computers = () => {
     }
   };
 
-  const handleRedirectHome = () => {
-    navigate('/');
-  };
 
   return (
     <div>

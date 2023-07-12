@@ -27,9 +27,6 @@ const Dogs = () => {
     }
   };
 
-  const handleRedirectHome = () => {
-    navigate('/');
-  };
 
   return (
     <div>
