@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import apiKey from './config';
 
 const SearchResults = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const query = new URLSearchParams(location.search).get('q');
@@ -33,14 +32,9 @@ const SearchResults = () => {
     }
   };
 
-  const handleRedirectHome = () => {
-    navigate('/');
-  };
-
   return (
     <div>
       <h2>Search Results for: {searchQuery} </h2>
-      <button onClick={handleRedirectHome}>Back to Home</button>
       <ul>
         {searchResults.map((photo) => (
           <li key={photo.id}>

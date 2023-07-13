@@ -9,7 +9,6 @@ import Computers from './components/Computers';
 import NotFound from './components/NotFound';
 import './index.css';
 import SearchResults from './components/SearchResults';
-import Photo from './components/Photo';
 import Nav from './components/Nav';
 
 const App = () => {
